@@ -19,7 +19,6 @@ spec:
       app.kubernetes.io/name: {{ .Values.airflow.name }}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         # app.kubernetes.io/component: web
         # app.kubernetes.io/instance: my-release
@@ -30,19 +29,19 @@ spec:
       restartPolicy: Always
       serviceAccountName: default
       schedulerName: default-scheduler
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 1
-              podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    # app.kubernetes.io/component: web
-                    # app.kubernetes.io/instance: my-release
-                    app.kubernetes.io/name: {{ .Values.airflow.name }}
-                namespaces:
-                  - app.kubernetes.io/name: {{ .Values.airflow.project }}
-                topologyKey: kubernetes.io/hostname
+      # affinity:
+      #   podAntiAffinity:
+      #     preferredDuringSchedulingIgnoredDuringExecution:
+      #       - weight: 1
+      #         podAffinityTerm:
+      #           labelSelector:
+      #             matchLabels:
+      #               # app.kubernetes.io/component: web
+      #               # app.kubernetes.io/instance: my-release
+      #               app.kubernetes.io/name: {{ .Values.airflow.name }}
+      #           namespaces:
+      #             - app.kubernetes.io/name: {{ .Values.airflow.project }}
+      #           topologyKey: kubernetes.io/hostname
       terminationGracePeriodSeconds: 30
       securityContext:
         fsGroup: 1001
@@ -109,9 +108,9 @@ spec:
             - name: POSTGRE_SERVER
               value: postgres
             - name: WEB_SERVER_PORT
-              value: 8080
+              value: "8080"
             - name: AIRFLOW__CORE__LOAD_EXAMPLES
-              value: False
+              value: "False"
 
 # ======= DAGS_FOLDER parameters from airflow-cwl-docker/.env_example_postgres_conda
             - name: DAGS_FOLDER
@@ -121,9 +120,9 @@ spec:
             - name: _AIRFLOW_WWW_USER_PASSWORD
               value: airflow
             - name: BASE_URL
-              value: 'http://localhost:8080'
+              value: "http://localhost:8080"
             - name: AIRFLOW__WEBSERVER__EXPOSE_CONFIG
-              value: True
+              value: "True"
 
 # ======= Mapped volumes from airflow-cwl-docker/.env_example_postgres_conda
             - name: PROJECT_DIR
