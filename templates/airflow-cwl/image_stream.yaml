@@ -1,7 +1,7 @@
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-  name: {{ .Values.anfisa.name }}
+  name: {{ .Values.airflow.name }}
   generation: 1
 spec:
   lookupPolicy:

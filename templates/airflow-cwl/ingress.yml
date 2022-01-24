@@ -4,7 +4,7 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ .Values.ingress.name }}
-  namespace: {{ .Values.anfisa.project }}
+  namespace: {{ .Values.airflow.project }}
 spec:
   tls:
     - hosts:
@@ -19,10 +19,5 @@ spec:
           - path: /
             pathType: ImplementationSpecific
             backend:
-              serviceName: anfisa-frontend
-              servicePort: 80
-          - path: /anfisa/app
-            pathType: ImplementationSpecific
-            backend:
-              serviceName: anfisa-backend
+              serviceName: airflow
               servicePort: 80

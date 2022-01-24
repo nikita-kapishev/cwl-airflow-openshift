@@ -1,24 +1,24 @@
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
-  name: {{ .Values.anfisa.name }}
+  name: {{ .Values.airflow.name }}
   labels:
-    app: {{ .Values.anfisa.name }}
-    deploymentconfig: {{ .Values.anfisa.name }}
+    app: {{ .Values.airflow.name }}
+    deploymentconfig: {{ .Values.airflow.name }}
 spec:
   replicas: 1
   selector:
-    app: {{ .Values.anfisa.name }}
-    deploymentconfig: {{ .Values.anfisa.name }}
+    app: {{ .Values.airflow.name }}
+    deploymentconfig: {{ .Values.airflow.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.anfisa.name }}
-        deploymentconfig: {{ .Values.anfisa.name }}
+        app: {{ .Values.airflow.name }}
+        deploymentconfig: {{ .Values.airflow.name }}
     spec:
       containers:
-        - name: {{ .Values.anfisa.name }}
-          image: "{{ .Values.anfisa.output_registry }}/{{ .Values.anfisa.project }}/{{ .Values.anfisa.name }}"
+        - name: {{ .Values.airflow.name }}
+          image: "{{ .Values.airflow.output_registry }}/{{ .Values.airflow.project }}/{{ .Values.airflow.name }}"
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           tty: true
@@ -30,10 +30,10 @@ spec:
   - imageChangeParams:
       automatic: true
       containerNames:
-      - {{ .Values.anfisa.name }}
+      - {{ .Values.airflow.name }}
       from:
         kind: ImageStreamTag
-        name: "{{ .Values.anfisa.output_registry }}/{{ .Values.anfisa.project }}/{{ .Values.anfisa.name }}:latest"
+        name: "{{ .Values.airflow.output_registry }}/{{ .Values.airflow.project }}/{{ .Values.airflow.name }}:latest"
     type: ImageChange
   strategy:
     type: Rolling

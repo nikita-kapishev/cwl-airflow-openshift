@@ -1,19 +1,19 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: anfisa-backend
+  name: {{ .Values.airflow.name }}
   labels:
-    app: {{ .Values.anfisa.name }}
+    app: {{ .Values.airflow.name }}
 spec:
   host: >-
     {{ .Values.ingress.host }}
-  path: /anfisa/app
+  path: /
   to:
     kind: Service
-    name: anfisa-backend
+    name: {{ .Values.airflow.name }}
     weight: 100
   port:
-    targetPort: anfisa-backend
+    targetPort: {{ .Values.airflow.name }}
   tls:
     insecureEdgeTerminationPolicy: Allow
     termination: edge

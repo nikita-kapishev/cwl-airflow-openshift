@@ -1,13 +1,13 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ .Values.anfisa.anfisa_volumes.workdir_claim_name }}
-  namespace: {{ .Values.anfisa.project }}
+  name: {{ .Values.airflow.airflow_volumes.workdir_claim_name }}
+  namespace: {{ .Values.airflow.project }}
   labels:
-    app.kubernetes.io/component: {{ .Values.anfisa.name }}
-    app.kubernetes.io/instance: {{ .Values.anfisa.name }}
-    app.kubernetes.io/name: {{ .Values.anfisa.name }}
-    app: {{ .Values.anfisa.name }}
+    app.kubernetes.io/component: {{ .Values.airflow.name }}
+    app.kubernetes.io/instance: {{ .Values.airflow.name }}
+    app.kubernetes.io/name: {{ .Values.airflow.name }}
+    app: {{ .Values.airflow.name }}
 spec:
   accessModes:
     - ReadWriteOnce

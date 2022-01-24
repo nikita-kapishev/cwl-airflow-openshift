@@ -1,5 +1,4 @@
 dependencies:
-- name: druid
-  version: 0.3.12
-  repository: "file://./charts/druid"
-  condition: druid.enabled
+- name: postgresql
+  version: 11.13.0
+  repository: "file://./dependencies/postgresql"

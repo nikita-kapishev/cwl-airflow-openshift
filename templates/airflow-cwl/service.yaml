@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: anfisa-backend
+  name: {{ .Values.airflow.name }}
   labels:
-    app: {{ .Values.anfisa.name }}
+    app: {{ .Values.airflow.name }}
   
 spec:
   ports:
-  - name: anfisa-backend
+  - name: {{ .Values.airflow.name }}
     port: 80
     protocol: TCP
-    targetPort: 80
+    targetPort: 8080
   selector:
-    app: {{ .Values.anfisa.name }}
+    app: {{ .Values.airflow.name }}
   sessionAffinity: None
   type: ClusterIP
