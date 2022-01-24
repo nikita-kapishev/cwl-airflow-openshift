@@ -10,6 +10,16 @@ spec:
       uri: {{ .Values.airflow.git_uri }}
       ref: {{ .Values.airflow.git_branch }}
   strategy:
+    sourceStrategy:
+      env:
+    - name: "POSTGRE_SERVER"
+      value: "postgres"
+    - name: "POSTGRE_DB"
+      value: "airflow"
+    - name: "POSTGRE_USER"
+      value: "airflow"
+    - name: "POSTGRE_PASS"
+      value: "airflow"
     type: Docker
     dockerStrategy:
       noCache: false
