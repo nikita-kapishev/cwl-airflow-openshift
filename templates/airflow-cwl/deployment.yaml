@@ -3,32 +3,29 @@ apiVersion: apps/v1
 metadata:
   annotations:
     deployment.kubernetes.io/revision: '1'
-    meta.helm.sh/release-name: my-release
-    meta.helm.sh/release-namespace: test
-  name: my-release-airflow-web
-  namespace: test
+  name: {{ .Values.airflow.name }}
+  namespace: {{ .Values.airflow.project }}
   labels:
-    app.kubernetes.io/component: web
-    app.kubernetes.io/instance: my-release
+    # app.kubernetes.io/component: web
+    # app.kubernetes.io/instance: my-release
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: airflow
-    helm.sh/chart: airflow-11.2.0
+    app.kubernetes.io/name: {{ .Values.airflow.name }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/component: web
-      app.kubernetes.io/instance: my-release
-      app.kubernetes.io/name: airflow
+      # app.kubernetes.io/component: web
+      # app.kubernetes.io/instance: my-release
+      app.kubernetes.io/name: {{ .Values.airflow.name }}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app.kubernetes.io/component: web
-        app.kubernetes.io/instance: my-release
+        # app.kubernetes.io/component: web
+        # app.kubernetes.io/instance: my-release
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: airflow
-        helm.sh/chart: airflow-11.2.0
+        app.kubernetes.io/name: {{ .Values.airflow.name }}
+        # helm.sh/chart: airflow-11.2.0
     spec:
       restartPolicy: Always
       serviceAccountName: default
@@ -40,11 +37,11 @@ spec:
               podAffinityTerm:
                 labelSelector:
                   matchLabels:
-                    app.kubernetes.io/component: web
-                    app.kubernetes.io/instance: my-release
-                    app.kubernetes.io/name: airflow
+                    # app.kubernetes.io/component: web
+                    # app.kubernetes.io/instance: my-release
+                    app.kubernetes.io/name: {{ .Values.airflow.name }}
                 namespaces:
-                  - test
+                  - app.kubernetes.io/name: {{ .Values.airflow.project }}
                 topologyKey: kubernetes.io/hostname
       terminationGracePeriodSeconds: 30
       securityContext:
@@ -60,7 +57,7 @@ spec:
             successThreshold: 1
             failureThreshold: 6
           terminationMessagePath: /dev/termination-log
-          name: airflow-web
+          name: airflow
           livenessProbe:
             tcpSocket:
               port: http
@@ -154,7 +151,7 @@ spec:
               protocol: TCP
           imagePullPolicy: IfNotPresent
           terminationMessagePolicy: File
-          image: 'docker.io/bitnami/airflow:2.2.3-debian-10-r16'
+          image: "{{ .Values.airflow.output_registry }}/{{ .Values.airflow.project }}/{{ .Values.airflow.name }}"
       serviceAccount: default
       dnsPolicy: ClusterFirst
   strategy:
