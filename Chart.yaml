@@ -3,4 +3,11 @@ appVersion: v1
 #description: 
 name: airflow
 version: v1
-
+dependencies:
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    version: 1.x.x
+  - name: postgresql
+    repository: https://charts.bitnami.com/bitnami
+    version: 10.x.x
+    
