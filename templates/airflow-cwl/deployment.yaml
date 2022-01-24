@@ -164,21 +164,3 @@ spec:
       maxSurge: 25%
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
-          - name: airflow-config
-            mountPath: /airflow/airflow.json
-            subPath: airflow.json
-     
-      volumes:
-      - name: data2
-        persistentVolumeClaim:
-          claimName: s3pvc
-      - name: {{ .Values.airflow.airflow_volumes.workdir_volume }}
-        persistentVolumeClaim:
-          claimName: {{ .Values.airflow.airflow_volumes.workdir_claim_name }}
-      - name: airflow-config
-        configMap:
-          name: {{ .Values.airflow.name }}
-          defaultMode: 420
-
-      terminationGracePeriodSeconds: 5
->>>>>>> 6628d742deceb65795a875718bdcee0cb3a9407a
