@@ -2,3 +2,7 @@
 
 # dependencies
 .charts
+*.tgz
+/.idea/*
+.vscode
+.DS_Store
