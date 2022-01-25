@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: airflow-cm-build
+data:
+  postgre_server: postgres
+  postgre_db: airflow
