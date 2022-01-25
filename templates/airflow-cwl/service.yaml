@@ -4,7 +4,6 @@ metadata:
   name: {{ .Values.airflow.name }}
   labels:
     app: {{ .Values.airflow.name }}
-  
 spec:
   ports:
   - name: {{ .Values.airflow.name }}
