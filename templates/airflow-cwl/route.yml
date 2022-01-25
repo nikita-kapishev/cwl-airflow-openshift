@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.airflow.name }}
   labels:
     app: {{ .Values.airflow.name }}
-# spec:
+spec:
 #   host: >-
 #     {{ .Values.ingress.host }}
   # path: /anfisa/app
