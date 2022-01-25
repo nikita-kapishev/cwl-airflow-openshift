@@ -14,37 +14,37 @@ spec:
     dockerStrategy: 
       noCache: false
       dockerfilePath: Dockerfile
-      env:
-      - name: POSTGRE_SERVER
-        valueFrom:
-          configMapKeyRef:
-            key: airflow-cm-build
-            name: postgre_server
-      - name: POSTGRE_DB
-        valueFrom:
-          configMapKeyRef:
-            key: airflow-cm-build
-            name: postgre_db
-      - name: POSTGRE_USER
-        valueFrom:
-          secretKeyRef:
-            key: airflow-sec-build
-            name: username
-      - name: POSTGRE_PASS
-        valueFrom:
-          secretKeyRef:
-            key: airflow-sec-build
-            name: username
     # sourceStrategy:
-    #   env:
-    #   - name: POSTGRE_SERVER
-    #     value: "postgres"
-    #   - name: POSTGRE_DB
-    #     value: "airflow"
-    #   - name: POSTGRE_USER
-    #     value: "airflow"
-    #   - name: POSTGRE_PASS
-    #     value: "airflow"
+      # env:
+      # - name: POSTGRE_SERVER
+      #   valueFrom:
+      #     configMapKeyRef:
+      #       key: airflow-cm-build
+      #       name: postgre_server
+      # - name: POSTGRE_DB
+      #   valueFrom:
+      #     configMapKeyRef:
+      #       key: airflow-cm-build
+      #       name: postgre_db
+      # - name: POSTGRE_USER
+      #   valueFrom:
+      #     secretKeyRef:
+      #       key: airflow-sec-build
+      #       name: username
+      # - name: POSTGRE_PASS
+      #   valueFrom:
+      #     secretKeyRef:
+      #       key: airflow-sec-build
+      #       name: username
+      buildArgs:
+        - name: POSTGRE_SERVER
+          value: "postgres"
+        - name: POSTGRE_DB
+          value: "airflow"
+        - name: POSTGRE_USER
+          value: "airflow"
+        - name: POSTGRE_PASS
+          value: "airflow"
   output:
     to:
       kind: ImageStreamTag
