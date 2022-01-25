@@ -4,13 +4,16 @@ metadata:
     name: {{ .Values.airflow.name }}
 spec:
   runPolicy: Serial
+  strategy:
   source:
     type: Git
     git:
       uri: {{ .Values.airflow.git_uri }}
       ref: {{ .Values.airflow.git_branch }}
-  strategy:
-    sourceStrategy:
+    type: Docker
+    dockerStrategy: 
+      noCache: false
+      dockerfilePath: Dockerfile
       env:
       - name: POSTGRE_SERVER
         valueFrom:
@@ -42,10 +45,6 @@ spec:
     #     value: "airflow"
     #   - name: POSTGRE_PASS
     #     value: "airflow"
-    type: Docker
-    dockerStrategy:
-      noCache: false
-      dockerfilePath: Dockerfile
   output:
     to:
       kind: ImageStreamTag
