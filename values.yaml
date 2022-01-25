@@ -23,7 +23,7 @@
 #   #oc get secrets -n openshift-ingress - view secrets with TLC-certificates
 
 airflow:
-  project: airflow-test2
+  project: airflow-test
   name: airflow
   git_uri: https://github.com/ForomePlatform/airflow-cwl-docker.git
   git_branch: master

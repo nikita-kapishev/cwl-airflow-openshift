@@ -37,6 +37,8 @@ spec:
       noCache: false
       dockerfilePath: Dockerfile
       buildArgs:
+      - name: AIRFLOW_CONDA_ENV
+        value: "conda_default"
       - name: POSTGRE_SERVER
         value: "postgres"
       - name: POSTGRE_DB
