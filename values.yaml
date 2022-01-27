@@ -13,14 +13,14 @@
 #   # size: "1000Gi" #hardcode
 #   # storageclass: ibmc-s3fs-standard-regional ----> #hardcode in PVC
 
-# # ------------------------------------------------------------------------------
-# # ingress:
-# # ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # ingress:
-#   name: airflow-ingress
-#   host: ui.asset-forome-dev-162fa491ef10b14d22843708d94ef0ba-0000.us-south.containers.appdomain.cloud
-#   certificate: asset-forome-dev-162fa491ef10b14d22843708d94ef0ba-0000 
-#   #oc get secrets -n openshift-ingress - view secrets with TLC-certificates
+# ------------------------------------------------------------------------------
+ingress:
+  name: airflow-ingress
+  host: airflow-test.asset-forome-dev-162fa491ef10b14d22843708d94ef0ba-0000.us-south.containers.appdomain.cloud
+  certificate: asset-forome-dev-162fa491ef10b14d22843708d94ef0ba-0000 
+  #oc get secrets -n openshift-ingress - view secrets with TLC-certificates
 
 airflow:
   project: airflow-test

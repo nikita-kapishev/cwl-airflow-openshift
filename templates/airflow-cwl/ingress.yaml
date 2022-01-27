@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: airflow-test
+  namespace: airflow-test
+spec:
+  tls:
+  - hosts:
+        - >-
+          {{ .Values.ingress.host }}
+    secretName: {{ .Values.ingress.certificate }}
+  rules:
+  - host: >-
+        {{ .Values.ingress.host }}
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: {{ .Values.airflow.name }}
+            port:
+              number: 80
