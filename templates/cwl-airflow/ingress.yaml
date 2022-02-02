@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: airflow-test
-  namespace: airflow-test
+  name: {{ .Values.ingress.name }}
+  namespace: {{ .Values.ingress.project }}
 spec:
   tls:
   - hosts:
