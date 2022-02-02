@@ -7,8 +7,8 @@ ingress:
 airflow:
   name: cwl-airflow
   project: cwl-airflow
-  git_uri: https://github.com/nikita-kapishev/cwl-airflow-openshift.git
-  git_branch: main
+  git_uri: https://github.com/ForomePlatform/airflow-cwl-docker
+  git_branch: master
   output_registry: image-registry.openshift-image-registry.svc:5000
   buildArgs:
     AIRFLOW_CONDA_ENV: "conda_default"
