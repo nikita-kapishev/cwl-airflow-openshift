@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: airflow-cm-build
 data:
-  postgre_server: postgres
+  postgre_server: postgresql
   postgre_db: airflow

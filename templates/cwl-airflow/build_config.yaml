@@ -1,0 +1,27 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: {{ .Values.airflow.name }}
+spec:
+  # runPolicy: Serial;
+  source:
+    type: Git
+    git:
+      uri: {{ .Values.airflow.git_uri }}
+      ref: {{ .Values.airflow.git_branch }}
+    type: Docker
+  strategy:
+    dockerStrategy: 
+      noCache: false
+      dockerfilePath: Dockerfile
+    {{- if .Values.airflow.buildArgs }}
+      buildArgs:
+      {{- range $key, $val := .Values.airflow.buildArgs }}
+        - name: {{ $key | quote }}
+          value: {{ $val | quote }}
+      {{- end }}
+    {{- end }}
+  output:
+    to:
+      kind: ImageStreamTag
+      name: "{{ .Values.airflow.name }}:latest"
