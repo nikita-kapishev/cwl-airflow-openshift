@@ -1,0 +1,19 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ .Values.airflow.name }}-webserver
+  labels:
+    app: {{ .Values.airflow.name }}-webserver
+spec:
+  host: >-
+    {{ .Values.ingress.host }}
+  to:
+    kind: Service
+    name: {{ .Values.airflow.name }}-webserver
+    weight: 100
+  port:
+    targetPort: {{ .Values.airflow.name }}-webserver
+  tls:
+    insecureEdgeTerminationPolicy: Allow
+    termination: edge
+  wildcardPolicy: None

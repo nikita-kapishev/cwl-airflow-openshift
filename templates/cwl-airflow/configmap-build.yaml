@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.ingress.name }}
 data:
-  postgre_server: postgresql
+  postgre_server: cwl-airflow-postgresql
   postgre_db: airflow
