@@ -14,6 +14,24 @@ spec:
       labels:
         app: {{ .Values.airflow.name }}-webserver
     spec:
+      initContainers:
+        - name: init-dags
+          image: bitnami/git:latest
+          command:
+            - /bin/bash
+            - -c
+            - |
+              cd /opt/airflow;
+              git clone https://github.com/NSAPH-Data-Platform/nsaph-platform-deployment git-source;
+              cp -run ./git-source/project ./;
+              cp -run ./git-source/project/examples/* ./dags/;
+          volumeMounts:
+          - mountPath: /opt/airflow/dags
+            name: airflow
+            subPath: dags
+          - mountPath: /opt/airflow/project
+            name: airflow
+            subPath: project
       containers: 
         - name: {{ .Values.airflow.name }}-webserver
           image: "{{ .Values.airflow.output_registry }}/{{ .Values.airflow.project }}/{{ .Values.airflow.name }}"
@@ -37,3 +55,29 @@ spec:
           # args: [ "-c" ,"tail -f /dev/null" ]
           command: [ "entrypoint.sh" ]
           args: [ "airflow" ,"webserver" ]
+          volumeMounts:
+          - mountPath: /opt/airflow/dags
+            name: airflow
+            subPath: dags
+          - mountPath: /opt/airflow/project
+            name: airflow
+            subPath: project
+          - mountPath: /opt/airflow/logs
+            name: airflow
+            subPath: logs
+          - mountPath: /opt/airflow/project/temp/cwl_tmp_folder
+            name: airflow
+            subPath: cwl_tmp_folder
+          - mountPath: /opt/airflow/project/temp/cwl_inputs_folder
+            name: airflow
+            subPath: cwl_inputs_folder
+          - mountPath: /opt/airflow/project/temp/cwl_outputs_folder
+            name: airflow
+            subPath: cwl_outputs_folder
+          - mountPath: /opt/airflow/project/temp/cwl_pickle_folder
+            name: airflow
+            subPath: cwl_pickle_folder
+      volumes:
+      - name: airflow
+        persistentVolumeClaim:
+          claimName: airflow-claim

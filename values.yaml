@@ -12,7 +12,8 @@ ingress:
 airflow:
   name: cwl-airflow
   project: cwl-airflow
-  git_uri: https://github.com/ForomePlatform/airflow-cwl-docker
+  # git_uri: https://github.com/ForomePlatform/airflow-cwl-docker
+  git_uri: https://github.com/NSAPH-Data-Platform/nsaph-platform-deployment
   git_branch: master
   output_registry: image-registry.openshift-image-registry.svc:5000
   buildArgs:

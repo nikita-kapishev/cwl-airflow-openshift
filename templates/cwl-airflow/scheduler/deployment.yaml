@@ -33,3 +33,29 @@ spec:
           # args: [ "-c" ,"tail -f /dev/null" ]
           command: [ "entrypoint.sh" ]
           args: [ "airflow" ,"scheduler" ]
+          volumeMounts:
+          - mountPath: /opt/airflow/dags
+            name: airflow
+            subPath: dags
+          - mountPath: /opt/airflow/project
+            name: airflow
+            subPath: project
+          - mountPath: /opt/airflow/logs
+            name: airflow
+            subPath: logs
+          - mountPath: /opt/airflow/project/temp/cwl_tmp_folder
+            name: airflow
+            subPath: cwl_tmp_folder
+          - mountPath: /opt/airflow/project/temp/cwl_inputs_folder
+            name: airflow
+            subPath: cwl_inputs_folder
+          - mountPath: /opt/airflow/project/temp/cwl_outputs_folder
+            name: airflow
+            subPath: cwl_outputs_folder
+          - mountPath: /opt/airflow/project/temp/cwl_pickle_folder
+            name: airflow
+            subPath: cwl_pickle_folder
+      volumes:
+      - name: airflow
+        persistentVolumeClaim:
+          claimName: airflow-claim
