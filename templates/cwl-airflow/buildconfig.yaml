@@ -3,7 +3,6 @@ kind: BuildConfig
 metadata:
   name: {{ .Values.airflow.name }}
 spec:
-  # runPolicy: Serial;
   source:
     type: Git
     git:
@@ -14,13 +13,9 @@ spec:
     dockerStrategy: 
       noCache: false
       dockerfilePath: Dockerfile
-    {{- if .Values.airflow.buildArgs }}
       buildArgs:
-      {{- range $key, $val := .Values.airflow.buildArgs }}
-        - name: {{ $key | quote }}
-          value: {{ $val | quote }}
-      {{- end }}
-    {{- end }}
+        - name: "AIRFLOW_CONDA_ENV"
+          value: "conda_default"
   output:
     to:
       kind: ImageStreamTag

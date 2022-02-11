@@ -3,11 +3,3 @@ description: CWL-Airflow chart for OpenShift
 version: v1
 apiVersion: v1
 appVersion: v1
-dependencies:
-  - name: common
-    repository: https://charts.bitnami.com/bitnami
-    version: 1.x.x
-  - name: postgresql
-    repository: https://charts.bitnami.com/bitnami
-    version: 10.x.x
-    
