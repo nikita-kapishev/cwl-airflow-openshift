@@ -18,13 +18,63 @@ spec:
         - name: {{ .Values.airflow.name }}-scheduler
           image: "{{ .Values.airflow.output_registry }}/{{ .Values.airflow.project }}/{{ .Values.airflow.name }}"
           imagePullPolicy: IfNotPresent
-        {{- if .Values.airflow.env }}
           env:
-          {{- range $key, $val := .Values.airflow.env }}
-            - name: {{ $key | quote }}
-              value: {{ $val | quote }}
-          {{- end }}
-        {{- end }}
+            - name: "AIRFLOW_CONDA_ENV"
+              value: "conda_default"
+            - name: "_AIRFLOW_WWW_USER_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cwl-airflow-openshift.secrets" . }}
+                  key: airflow-password
+            - name: "_AIRFLOW_WWW_USER_USERNAME"
+              value: {{ .Values.airflow.username }}
+            - name: "AIRFLOW__CORE__EXECUTOR"
+              value: "LocalExecutor"
+            - name: "AIRFLOW_CONN_METADATA_DB"
+              value: {{ include "cwl-airflow-openshift.dbconn" . }}
+            - name: "AIRFLOW__CORE__SQL_ALCHEMY_CONN"
+              value: {{ include "cwl-airflow-openshift.dbconn" . }}
+            - name: "AIRFLOW_HOME"
+              value: "/opt/airflow"
+            - name: "AIRFLOW__CORE__DAGS_FOLDER"
+              value: "/opt/airflow/dags"
+            - name: "AIRFLOW_VAR__METADATA_DB_SCHEMA"
+              value: "airflow"
+            - name: "AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION"
+              value: "true"
+            - name: "AIRFLOW__CORE__FERNET_KEY"
+              value: ""
+            - name: "AIRFLOW__CORE__LOAD_EXAMPLES"
+              value: "false"
+            - name: "AIRFLOW__LOGGING__BASE_LOG_FOLDER"
+              value: "/opt/airflow/logs"
+            - name: "AIRFLOW__SCHEDULER__SCHEDULER_HEARTBEAT_SEC"
+              value: "10"
+            - name: "AIRFLOW__WEBSERVER__BASE_URL"
+              value: "http://localhost:8080"
+            - name: "WEB_SERVER_PORT"
+              value: "8080"
+            - name: "AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX"
+              value: "true"
+            - name: "AIRFLOW__WEBSERVER__EXPOSE_CONFIG"
+              value: "true"
+            - name: "POSTGRE_DB"
+              value: {{ include "cwl-airflow-openshift.database.name" . }}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "cwl-airflow-openshift.secrets" . }}
+                  key: postgresql-password
+            - name: "POSTGRE_SERVER"
+              value: {{ include "cwl-airflow-openshift.postgresql.fullname" . }}
+            - name: "POSTGRE_USER"
+              value: {{ include "cwl-airflow-openshift.database.user" . }}
+            - name: "PROJECT_DIR"
+              value: "/opt/airflow/project"
+            - name: "_AIRFLOW_DB_UPGRADE"
+              value: "true"
+            - name: "_AIRFLOW_WWW_USER_CREATE"
+              value: "true"
           # terminationMessagePath: /dev/termination-log
           # terminationMessagePolicy: File
           tty: true
