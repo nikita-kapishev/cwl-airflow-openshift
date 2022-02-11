@@ -22,12 +22,21 @@ spec:
               value: {{ .Values.airflow.git_uri }}
           command:
             - /bin/bash
-            - -ce
+            - -c
             - |
-              cd /opt/airflow;
-              git clone $GIT_REPO git-repo;
-              cp -run ./git-repo/project ./;
-              cp -run ./git-repo/project/examples/* ./dags/;
+              git clone $GIT_REPO /opt/airflow/git-repo;
+              cd $_;
+              sed -i -e 's/git\@\(github\.com\)\:/https\:\/\/\1\//g' -e 's/\/Users\/misha\/harvard\/github\/nsaph-cwl-airflow\///g' .gitmodules;
+              mkdir ~/.ssh;
+              ssh-keyscan github.com >> ~/.ssh/known_hosts;
+              git submodule update --init --recursive;
+              cp -run ./project /opt/airflow/;
+              cp -run ./project/examples/* /opt/airflow/dags/;
+              # tail -f /dev/null;
+              # cd /opt/airflow/;
+              # git clone $GIT_REPO git-repo;
+              # cp -run ./git-repo/project ./;
+              # cp -run ./git-repo/project/examples/* ./dags/;
           volumeMounts:
           - mountPath: /opt/airflow/dags
             name: airflow
